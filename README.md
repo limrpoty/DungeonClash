@@ -1,10 +1,4 @@
 # DungeonClash
- 
+<p>Feito para matéria de POO por: Marcos Lima Alves, Miguel Barcelos e ... </p>
 
-
-
-
-
-<p>Feito para matéria de POO por:</p>
-<p>Marcos Lima Alves, Miguel Barcelos e ... </p>
-### Trabalho Em Processo
+### Trabalho Em Progresso
