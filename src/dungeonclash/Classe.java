@@ -3,6 +3,7 @@ package dungeonclash;
 import java.util.ArrayList;
 
 public abstract class Classe {
+	private String nomeDaClasse;
 	private int forca;
 	private int agilidade;
 	private int inteligencia;
@@ -44,5 +45,13 @@ public abstract class Classe {
 	
 	public void setForca(int forca) {
 		this.forca = forca;
+	}
+
+	public String getNomeDaClasse() {
+		return nomeDaClasse;
+	}
+
+	public void setNomeDaClasse(String nomeDaClasse) {
+		this.nomeDaClasse = nomeDaClasse;
 	}
 }

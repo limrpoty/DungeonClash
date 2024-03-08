@@ -27,6 +27,12 @@ public class Personagem {
 			this.nivel++;
 			setPvMax(nivel * classe.getForca() + (nivel * classe.getAgilidade() / 2));
 			setPmMax(nivel * classe.getInteligencia() + (nivel * classe.getAgilidade() / 3));
+			
+			int [] aux = PesosDeAtributos.levelUp(this.classe.getNomeDaClasse()); 
+			
+			this.classe.setAgilidade(this.classe.getAgilidade() + aux[0]);
+			this.classe.setForca(this.classe.getForca() + aux[1]);
+			this.classe.setInteligencia(this.classe.getInteligencia() + aux[2]);
 		}
 	}
 	
