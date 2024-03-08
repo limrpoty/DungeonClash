@@ -4,9 +4,20 @@ public class Personagem {
 	private String nome;
 	private int nivel, pe;
 	private float pv, pm;
+	private float pvMax, pmMax;
 	private int tempoEspera;
 	private Classe classe;
 	private static int id;
+	
+	public Personagem(String nome, Classe classe) {
+		this.nome = nome;
+		this.nivel = 1;
+		this.pe = 0;
+		this.classe = classe;
+		this.tempoEspera = 0;
+		this.pv = (nivel * classe.getForca() + (nivel * classe.getAgilidade() / 2));
+		this.pm = (nivel * classe.getInteligencia() + (nivel * classe.getAgilidade() / 3));
+	}
 	
 	public void ganhaExp(int nivelInimigo) {
 		this.pe += nivelInimigo * 5;
@@ -14,6 +25,8 @@ public class Personagem {
 		if(this.pe >= (this.nivel * 25)) {
 			this.pe %= this.nivel * 25;
 			this.nivel++;
+			setPvMax(nivel * classe.getForca() + (nivel * classe.getAgilidade() / 2));
+			setPmMax(nivel * classe.getInteligencia() + (nivel * classe.getAgilidade() / 3));
 		}
 	}
 	
@@ -100,5 +113,21 @@ public class Personagem {
 
 	public void setClasse(Classe classe) {
 		this.classe = classe;
+	}
+
+	public float getPvMax() {
+		return pvMax;
+	}
+
+	public void setPvMax(float pvMax) {
+		this.pvMax = pvMax;
+	}
+
+	public float getPmMax() {
+		return pmMax;
+	}
+
+	public void setPmMax(float pmMax) {
+		this.pmMax = pmMax;
 	}
 }

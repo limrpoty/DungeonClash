@@ -6,9 +6,7 @@ public class Habilidades {
 	private int tempo;
 	private boolean afetaTodos, afetaAmigos;
 	private static int id;
-	
-	
-	
+
 	public String getNome() {
 		return nome;
 	}
