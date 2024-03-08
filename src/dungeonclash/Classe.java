@@ -1,12 +1,12 @@
 package dungeonclash;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public abstract class Classe {
 	private int forca;
 	private int agilidade;
 	private int inteligencia;
-	private List<Habilidades> habilidade;
+	private ArrayList<Habilidades> habilidade;
 	
 	public Classe(int forca, int agilidade, int inteligencia) {
 		this.agilidade = agilidade;
@@ -14,7 +14,7 @@ public abstract class Classe {
 		this.inteligencia = inteligencia;
 	}
 	
-	public List<Habilidades> getHabilidade() {
+	public ArrayList<Habilidades> getHabilidade() {
 		return habilidade;
 	}
 	

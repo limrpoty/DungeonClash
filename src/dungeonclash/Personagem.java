@@ -25,6 +25,19 @@ public class Personagem {
 		
 	}
 	
+	public void atacarEquipe(Equipe equipeInimiga) {
+		
+	}
+	
+	public void subidaDeNivel(int nivelInimigo) {
+		this.pe += nivelInimigo * 5;
+		if(this.pe == this.nivel * 25) {
+			this.pe %= this.nivel * 25;
+			this.nivel += 1;
+		}
+		
+	}
+	
 	public int getNivel() {
 		return nivel;
 	}
