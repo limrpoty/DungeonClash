@@ -3,9 +3,16 @@ package dungeonclash;
 public class Habilidades {
 	private String nome;
 	private PesosDeAtributos pesosDano, pesosMana;
-	private int tempo;
+	private int tempoEspera;
 	private boolean afetaTodos, afetaAmigos;
 	private static int id;
+	
+	public Habilidades(String nome, int tempo, boolean afetaAmigos, boolean afetaTodos) {
+		this.nome = nome;
+		this.afetaAmigos = afetaAmigos;
+		this.afetaTodos = afetaTodos;
+		this.tempoEspera = tempo;
+	}
 
 	public String getNome() {
 		return nome;
@@ -24,11 +31,11 @@ public class Habilidades {
 	}
 	
 	public int getTempo() {
-		return tempo;
+		return tempoEspera;
 	}
 	
 	public void setTempo(int tempo) {
-		this.tempo = tempo;
+		this.tempoEspera = tempo;
 	}
 	
 	public boolean isAfetaAmigos() {
