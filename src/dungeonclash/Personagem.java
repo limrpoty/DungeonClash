@@ -36,24 +36,16 @@ public class Personagem {
 		}
 	}
 	
-	public void atacarInimigo() {
+	public void atacarInimigo(Personagem atacante, Personagem atacado) {
 		
+		atacado.danoSofrido(atacante.getNome(), atacado.getNome(), 0);
 	}
 	
-	public void danoSofrido(String atacante, String atacado, int dano) {
+	public void danoSofrido(String atacante, String atacado, float dano) {
 		
 	}
 	
 	public void atacarEquipe(Equipe equipeInimiga) {
-		
-	}
-	
-	public void subidaDeNivel(int nivelInimigo) {
-		this.pe += nivelInimigo * 5;
-		if(this.pe == this.nivel * 25) {
-			this.pe %= this.nivel * 25;
-			this.nivel += 1;
-		}
 		
 	}
 	
