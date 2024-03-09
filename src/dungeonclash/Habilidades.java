@@ -2,13 +2,15 @@ package dungeonclash;
 
 public class Habilidades {
 	private String nome;
-	private PesosDeAtributos pesosDano, pesosMana;
+	private int pesosDano, pesosMana;
 	private int tempoEspera;
 	private boolean afetaTodos, afetaAmigos;
 	private static int id;
 	
-	public Habilidades(String nome, int tempo, boolean afetaAmigos, boolean afetaTodos) {
+	public Habilidades(String nome, int i, int j, int tempo, boolean afetaAmigos, boolean afetaTodos) {
 		this.nome = nome;
+		this.pesosDano = i;
+		this.pesosMana = j;
 		this.afetaAmigos = afetaAmigos;
 		this.afetaTodos = afetaTodos;
 		this.tempoEspera = tempo;
@@ -22,11 +24,11 @@ public class Habilidades {
 		this.nome = nome;
 	}
 	
-	public PesosDeAtributos getPesosMana() {
+	public int getPesosMana() {
 		return pesosMana;
 	}
 	
-	public void setPesosMana(PesosDeAtributos pesosMana) {
+	public void setPesosMana(int pesosMana) {
 		this.pesosMana = pesosMana;
 	}
 	
@@ -46,11 +48,11 @@ public class Habilidades {
 		this.afetaAmigos = afetaAmigos;
 	}
 	
-	public PesosDeAtributos getPesosDano() {
+	public int getPesosDano() {
 		return pesosDano;
 	}
 	
-	public void setPesosDano(PesosDeAtributos pesosDano) {
+	public void setPesosDano(int pesosDano) {
 		this.pesosDano = pesosDano;
 	}
 	

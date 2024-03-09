@@ -5,8 +5,12 @@ import java.util.ArrayList;
 public class Equipe {
 	private ArrayList<Personagem> equipe;
 	
-	public void addHeroi(Personagem novoHeroi) {
-		equipe.add(novoHeroi);
+	public Equipe() {
+		this.equipe = new ArrayList<>();
+	}
+	
+	public void addPersonagem(Personagem novoPersonagem) {
+		equipe.add(novoPersonagem);
 	}
 
 	public ArrayList<Personagem> equipeInteira() {
@@ -15,7 +19,7 @@ public class Equipe {
 	
 	public void experienciaGeral(int nivelInimigo) {
 		for(Personagem personagem : equipe) {
-			personagem.ganhaExp(nivelInimigo);
+			personagem.adicionarPE(nivelInimigo);
 		}
 	}
 	

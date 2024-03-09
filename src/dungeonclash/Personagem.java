@@ -1,131 +1,99 @@
 package dungeonclash;
 
-public class Personagem {
-	private String nome;
-	private int nivel, pe;
-	private float pv, pm;
-	private float pvMax, pmMax;
-	private int tempoEspera;
-	private Classe classe;
-	private static int id;
-	
-	public Personagem(String nome, Classe classe) {
-		this.nome = nome;
-		this.nivel = 1;
-		this.pe = 0;
-		this.classe = classe;
-		this.tempoEspera = 0;
-		this.pv = (nivel * classe.getForca() + (nivel * classe.getAgilidade() / 2));
-		this.pm = (nivel * classe.getInteligencia() + (nivel * classe.getAgilidade() / 3));
-	}
-	
-	public void ganhaExp(int nivelInimigo) {
-		this.pe += nivelInimigo * 5;
-		
-		if(this.pe >= (this.nivel * 25)) {
-			this.pe %= this.nivel * 25;
-			this.nivel++;
-			setPvMax(nivel * classe.getForca() + (nivel * classe.getAgilidade() / 2));
-			setPmMax(nivel * classe.getInteligencia() + (nivel * classe.getAgilidade() / 3));
-			
-			int [] aux = PesosDeAtributos.levelUp(this.classe.getNomeDaClasse()); 
-			
-			this.classe.setAgilidade(this.classe.getAgilidade() + aux[0]);
-			this.classe.setForca(this.classe.getForca() + aux[1]);
-			this.classe.setInteligencia(this.classe.getInteligencia() + aux[2]);
-		}
-	}
-	
-	public void atacarInimigo(Personagem atacante, Personagem atacado) {
-		
-		atacado.danoSofrido(atacante.getNome(), atacado.getNome(), 0);
-	}
-	
-	public void danoSofrido(String atacante, String atacado, float dano) {
-		
-	}
-	
-	public void atacarEquipe(Equipe equipeInimiga) {
-		
-	}
-	
-	public int getNivel() {
-		return nivel;
-	}
-	
-	public void setNivel(int nivel) {
-		this.nivel = nivel;
-	}
-	
-	public int getPe() {
-		return pe;
-	}
-	
-	public void setPe(int pe) {
-		this.pe = pe;
-	}
-	
-	public String getNome() {
-		return nome;
-	}
+class Personagem {
+    private static int contadorIDs = 1;
+    private String nome;
+    private int nivel, PE;
+    private float PV, PM;
+    private int tempoEspera;
+    private Classe classe;
+    private int ID;
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public Personagem(String nome, int nivel, Classe classe) {
+        this.nome = nome;
+        this.classe = classe;
+        this.ID = contadorIDs++;
+        this.nivel = nivel;
+        this.PE = 0;
+        this.PV = calcularPVMax();
+        this.PM = calcularPMMax();
+        this.tempoEspera = 0;
+    }
 
-	public int getTempoEspera() {
-		return tempoEspera;
-	}
+    private float calcularPVMax() {
+        return nivel * classe.getForca() + (nivel * classe.getAgilidade() / 2);
+    }
 
-	public void setTempoEspera(int tempoEspera) {
-		this.tempoEspera = tempoEspera;
-	}
+    private float calcularPMMax() {
+        return nivel * classe.getInteligencia() + (nivel * classe.getAgilidade() / 3);
+    }
 
-	public static int getId() {
-		return id;
-	}
+    public void adicionarPE(int pe) {
+        this.PE += pe;
+        while (PE >= nivel * 25) {
+            subirNivel();
+        }
+    }
 
-	public static void setId(int id) {
-		Personagem.id = id;
-	}
+    private void subirNivel() {
+        nivel++;
+        PE -= nivel * 25;
+        PV = calcularPVMax();
+        PM = calcularPMMax();
+        classe.adicionarPontosAtributo(this);
+    }
 
-	public float getPm() {
-		return pm;
-	}
+    public int atacar() {
+        return classe.atacar(this);
+    }
 
-	public void setPm(float pm) {
-		this.pm = pm;
-	}
+    public void receberDano(int dano) {
+        PV -= dano;
+        if (PV < 0) {
+            PV = 0;
+        }
+    }
 
-	public float getPv() {
-		return pv;
-	}
+    public void reduzirTempoEspera() {
+        tempoEspera--;
+        if (tempoEspera < 0) {
+            tempoEspera = 0;
+        }
+    }
 
-	public void setPv(float pv) {
-		this.pv = pv;
-	}
+    public Habilidades escolherHabilidade() {
+        return classe.escolherHabilidade();
+    }
 
-	public Classe getClasse() {
-		return classe;
-	}
+    public String getNome() {
+        return nome;
+    }
 
-	public void setClasse(Classe classe) {
-		this.classe = classe;
-	}
+    public int getNivel() {
+        return nivel;
+    }
 
-	public float getPvMax() {
-		return pvMax;
-	}
+    public int getPE() {
+        return PE;
+    }
 
-	public void setPvMax(float pvMax) {
-		this.pvMax = pvMax;
-	}
+    public float getPV() {
+        return PV;
+    }
 
-	public float getPmMax() {
-		return pmMax;
-	}
+    public float getPM() {
+        return PM;
+    }
 
-	public void setPmMax(float pmMax) {
-		this.pmMax = pmMax;
-	}
+    public int getTempoEspera() {
+        return tempoEspera;
+    }
+
+    public Classe getClasse() {
+        return classe;
+    }
+
+    public int getID() {
+        return ID;
+    }
 }
