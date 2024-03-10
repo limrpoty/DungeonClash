@@ -1,6 +1,7 @@
 package dungeonclash;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Equipe {
 	private ArrayList<Personagem> equipe;
@@ -11,6 +12,10 @@ public class Equipe {
 	
 	public void addPersonagem(Personagem novoPersonagem) {
 		equipe.add(novoPersonagem);
+	}
+	
+	public void addAll(List<Personagem> personagem) {
+		equipe.addAll(personagem);
 	}
 
 	public ArrayList<Personagem> equipeInteira() {

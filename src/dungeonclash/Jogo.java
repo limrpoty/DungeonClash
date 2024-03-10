@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Jogo {
     private List<Fase> fases;
+    private List<Equipe> equipes = new ArrayList<>();
     
     public Jogo() {
         this.fases = new ArrayList<>();
@@ -28,8 +29,8 @@ public class Jogo {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        jogarFases();
+        dividirInimigosEquipes();
+        criarFases();
     }
 
     private void lerMonstrosFase(BufferedReader br, Fase fase) throws IOException {
@@ -67,9 +68,19 @@ public class Jogo {
             }
         }
     }
+    
+    private void dividirInimigosEquipes() {
+    	for (Fase fase : fases) {
+    		Equipe inimigos = new Equipe();
+    		for (Personagem persona : fase.getInimigos()) {
+    			inimigos.addPersonagem(persona);
+    		}
+    		equipes.add(inimigos);
+    	}
+    }
 
-    private void jogarFases() { 	
-        for (int i = 0; i < fases.size(); i++) {
+    private void criarFases() { 	
+        /*for (int i = 0; i < fases.size(); i++) {
             System.out.println("Fase " + (i + 1) + ": " + fases.get(i).getDescricao());
             System.out.println("Inimigos:");
             for (Personagem inimigo : fases.get(i).getInimigos()) {
@@ -78,6 +89,12 @@ public class Jogo {
             }
             
             System.out.println();
+            jogarFases();
         }
+    }
+    
+    private void jogarFases() {
+    	
+    }*/
     }
 }
