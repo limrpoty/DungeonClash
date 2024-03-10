@@ -19,7 +19,43 @@ class Personagem {
         this.PM = calcularPMMax();
         this.tempoEspera = 0;
     }
-
+    
+    public void causarDano(String habilidade, Personagem atacado, Equipe equipe) {
+    	atacado.usarHabilidade(habilidade, atacado, equipe);
+    }
+    
+    public void recebeDano(int dano) {
+    	this.PV -= dano;
+    	if (this.PV < 0) {
+    		this.PV = 0;
+    	}
+    }
+    
+    public void usarHabilidade(String nomeHabilidade, Personagem atacado, Equipe equipe) {
+    	int danoOuCura = 0;
+    	String nomeAlvo = atacado.getNome();
+    	Personagem alvo = equipe.buscaPersonagem(nomeAlvo);
+    	
+    	for (Habilidades habilidades : classe.getHabilidades()) {
+    		if (habilidades.getNome().equals(nomeHabilidade)) {
+    			danoOuCura = habilidades.getPesosDano() * nivel;
+    			if (habilidades.isAfetaAmigos()) {
+    				alvo.PV += danoOuCura;
+    				
+    			} else if (habilidades.isAfetaTodos()) {
+    				for (Personagem persona : equipe.equipeInteira()) {
+    					persona.recebeDano(danoOuCura);
+    				}
+    			} else {
+    				alvo.recebeDano(danoOuCura);
+    			}
+    			PM -= habilidades.getPesosMana();
+    			tempoEspera = habilidades.getTempo();
+    		}
+    	}
+    }
+    
+    
     private float calcularPVMax() {
         return nivel * classe.getForca() + (nivel * classe.getAgilidade() / 2);
     }
@@ -40,18 +76,7 @@ class Personagem {
         PE -= nivel * 25;
         PV = calcularPVMax();
         PM = calcularPMMax();
-        classe.adicionarPontosAtributo(this);
-    }
-
-    public int atacar() {
-        return classe.atacar(this);
-    }
-
-    public void receberDano(int dano) {
-        PV -= dano;
-        if (PV < 0) {
-            PV = 0;
-        }
+        classe.adicionarPontosAtributo();
     }
 
     public void reduzirTempoEspera() {
@@ -61,10 +86,11 @@ class Personagem {
         }
     }
 
-    public Habilidades escolherHabilidade() {
+    /*public Habilidades escolherHabilidade() {
         return classe.escolherHabilidade();
-    }
+    }*/
 
+    //getters e setters
     public String getNome() {
         return nome;
     }
@@ -80,7 +106,10 @@ class Personagem {
     public float getPV() {
         return PV;
     }
-
+    
+    public void setPV(float PV) {
+    	this.PV = PV;
+    }
     public float getPM() {
         return PM;
     }
@@ -96,4 +125,5 @@ class Personagem {
     public int getID() {
         return ID;
     }
+    
 }

@@ -20,12 +20,12 @@ abstract class Classe {
 
     public abstract int atacar(Personagem personagem);
 
-    public abstract void adicionarPontosAtributo(Personagem personagem);
+    public abstract void adicionarPontosAtributo();
 
-    public Habilidades escolherHabilidade() {
+    /*public Habilidades escolherHabilidade() {
         int index = (int) (Math.random() * habilidades.size());
         return habilidades.get(index);
-    }
+    }*/
     
     public void setHabilidades(Habilidades habilidade) {
     	this.habilidades.add(habilidade);

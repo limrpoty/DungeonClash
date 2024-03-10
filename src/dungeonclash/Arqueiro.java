@@ -5,24 +5,24 @@ public class Arqueiro extends Classe {
 	public Arqueiro(int nivel) {
 		super(nivel, nivel * 3, nivel * 2);
 		super.setNomeClasse("Arqueiro");
-		adicionarHabilidades("Socar", calculaSocar(super.getForca(), super.getAgilidade()), 0, 3, false, false);
-        adicionarHabilidades("Atirar Flecha", calculaAtirarFlecha(super.getForca(), super.getAgilidade()), 0, 4, false, false);
-        adicionarHabilidades("Flecha Encantada", calculaFlechaEncantada(super.getForca(), super.getAgilidade()), manaFlechaEncantada(super.getForca(), super.getAgilidade()), 7, false, false);
+		adicionarHabilidades("Socar", calculaSocar(), 0, 3, false, false);
+        adicionarHabilidades("Atirar Flecha", calculaAtirarFlecha(), 0, 4, false, false);
+        adicionarHabilidades("Flecha Encantada", calculaFlechaEncantada(), manaFlechaEncantada(), 7, false, false);
     }
 
-    private int calculaSocar(int forca, int agilidade) {
-        return (int) Math.ceil(agilidade * 0.1 + forca * 0.3);
+    private int calculaSocar() {
+        return (int) Math.ceil(getAgilidade() * 0.1 + getForca() * 0.3);
     }
 
-    private int calculaAtirarFlecha(int forca, int agilidade) {
-        return (int) Math.ceil(forca * 0.3 + agilidade * 0.5);
+    private int calculaAtirarFlecha() {
+        return (int) Math.ceil(getForca() * 0.3 + getAgilidade() * 0.5);
     }
 
-    private int calculaFlechaEncantada(int forca, int agilidade) {
-        return (int) Math.ceil(forca * 0.3 + agilidade * 0.5 + getInteligencia() * 0.4);
+    private int calculaFlechaEncantada() {
+        return (int) Math.ceil(getForca() * 0.3 + getAgilidade() * 0.5 + getInteligencia() * 0.4);
     }
-    private int manaFlechaEncantada(int agilidade, int inteligencia) {
-        return (int) Math.ceil(inteligencia + agilidade * 0.2);
+    private int manaFlechaEncantada() {
+        return (int) Math.ceil(getInteligencia() + getAgilidade() * 0.2);
     }
 
     public void adicionarHabilidades(String nome, int i, int j, int tempo, boolean afetaAmigos, boolean afetaTodos) {
@@ -37,9 +37,34 @@ public class Arqueiro extends Classe {
 	}
 
 	@Override
-	public void adicionarPontosAtributo(Personagem personagem) {
-		personagem.getClasse().setForca(personagem.getClasse().getForca() + 1);
-		personagem.getClasse().setAgilidade(personagem.getClasse().getAgilidade() + 3);
-		personagem.getClasse().setInteligencia(personagem.getClasse().getInteligencia() + 2);		
+	public void adicionarPontosAtributo() {
+		setForca(getForca() + 1);
+		setAgilidade(getAgilidade() + 3);
+		setInteligencia(getInteligencia() + 2);		
+		ajustarHabilidades();
+	}
+	
+	public void ajustarHabilidades() {
+		for (Habilidades poder : super.getHabilidades()) {
+			String nome = poder.getNome();
+			
+			switch (nome) {
+			case "Socar"			: 
+				poder.setPesosDano(calculaSocar());
+				break;
+				
+			case "Atirar Flecha"	: 
+				poder.setPesosDano(calculaAtirarFlecha());
+				break;
+				
+			case "Flecha Encantada": 
+				poder.setPesosDano(calculaFlechaEncantada());
+				poder.setPesosMana(manaFlechaEncantada());
+				break;
+				
+			default 				:
+				break;
+			}
+		}
 	}
 }

@@ -13,7 +13,7 @@ public class Jogo {
         this.fases = new ArrayList<>();
     }
 
-    public void startJogo(String nomeArquivo) {
+    public void iniciarJogo(String nomeArquivo) {
         try (BufferedReader br = new BufferedReader(new FileReader(nomeArquivo))) {
             String linha;
 
