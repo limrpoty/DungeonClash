@@ -117,7 +117,11 @@ class Personagem {
     public int getTempoEspera() {
         return tempoEspera;
     }
-
+    
+    public void setTempoEspera(int tempoEspera) {
+    	this.tempoEspera = tempoEspera;
+    }
+    
     public Classe getClasse() {
         return classe;
     }

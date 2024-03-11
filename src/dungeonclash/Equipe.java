@@ -37,6 +37,15 @@ public class Equipe {
 		return null;
 	}
 	
+	public Personagem buscaPersonagem(int indentificador) {
+		for (Personagem persona : equipe) {
+			if (persona.getID() == indentificador) {
+				return persona;
+			}
+		}
+		return null;
+	}
+	
 	public ArrayList<Personagem> proximoAtacante() {
 		for(Personagem personagem : equipe) {
 			if(personagem.getTempoEspera() == 0) {
@@ -44,6 +53,13 @@ public class Equipe {
 			}
 		}
 		return null;
+	}
+	
+	public boolean estaVazio() {
+		if (equipeInteira() != null) {
+			return false;
+		}
+		return true;
 	}
 	
 	public int atualizarTempoEspera(ArrayList<Habilidades> habilidades, String nome) {

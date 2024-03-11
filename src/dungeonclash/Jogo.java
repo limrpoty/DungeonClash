@@ -5,13 +5,21 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
 
 public class Jogo {
     private List<Fase> fases;
-    private List<Equipe> equipes = new ArrayList<>();
+    private List<Equipe> viloes;
+    private Equipe herois;
+    private Scanner scanner;
+    private Random random;
     
     public Jogo() {
         this.fases = new ArrayList<>();
+        this.viloes = new ArrayList<>();
+        this.scanner = new Scanner(System.in);
+        this.random = new Random();
     }
 
     public void iniciarJogo(String nomeArquivo) {
@@ -75,26 +83,111 @@ public class Jogo {
     		for (Personagem persona : fase.getInimigos()) {
     			inimigos.addPersonagem(persona);
     		}
-    		equipes.add(inimigos);
+    		viloes.add(inimigos);
     	}
     }
+    
+    public void exibirMenu() {
+        boolean sair = false;
 
-    private void criarFases() { 	
-        /*for (int i = 0; i < fases.size(); i++) {
-            System.out.println("Fase " + (i + 1) + ": " + fases.get(i).getDescricao());
-            System.out.println("Inimigos:");
-            for (Personagem inimigo : fases.get(i).getInimigos()) {
-                System.out.println(inimigo.getNome() + " - Nível " + inimigo.getNivel() + " " + inimigo.getClasse().getNomeClasse());
-                System.out.println(inimigo.getPV() + " " + inimigo.getPM());
+        while (!sair) {
+            System.out.println("----- MENU -----");
+            System.out.println("1. Adicionar Personagem");
+            System.out.println("2. Iniciar Jogo");
+            System.out.println("3. Sair");
+
+            int opcao = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (opcao) {
+                case 1:
+                    adicionarPersonagem();
+                    break;
+                case 2:
+                    this.iniciarJogo("src/dungeonclash/jogo.txt");
+                    break;
+                case 3:
+                    sair = true;
+                    break;
+                default:
+                    System.out.println("Opção inválida. Por favor, escolha uma opção válida.");
             }
-            
-            System.out.println();
-            jogarFases();
         }
     }
     
-    private void jogarFases() {
+    public void adicionarPersonagem() {
     	
-    }*/
     }
+    
+    private void criarFases() {
+    	for (Fase fase : fases) {
+    		System.out.println("Fase" + ": " + fase.getDescricao());
+    		iniciarBatalha();
+    		System.out.println();
+        	viloes.remove(0);
+    	}
+    }
+    
+    public void iniciarBatalha() {
+        System.out.println("Batalha Iniciada!");
+
+        while (!verificarFimDaBatalha()) {
+            if (verificarPersonagensComTempoZero()) {
+                Personagem personagem = escolherPersonagemAleatorio();
+                if (personagem != null) {
+                    System.out.println(personagem.getNome() + " está atacando!");   
+                    personagem.setTempoEspera(personagem.getTempoEspera() - 1);
+                }
+            } else {
+                System.out.println("Todos os personagens estão esperando...");
+            }
+            atualizarTemposEspera();
+        }
+
+        System.out.println("Fim da Batalha!");
+    }
+
+    private boolean verificarFimDaBatalha() {
+        return herois.estaVazio() || viloes.get(0).estaVazio();
+    }
+
+    private boolean verificarPersonagensComTempoZero() {
+        for (Personagem personagem : herois.equipeInteira()) {
+            if (personagem.getTempoEspera() == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private Personagem escolherPersonagemAleatorio() {
+        List<Personagem> personagensDisponiveis = new ArrayList<>();
+        for (Personagem personagem : herois.equipeInteira()) {
+            if (personagem.getTempoEspera() == 0) {
+                personagensDisponiveis.add(personagem);
+            }
+        }
+
+        if (!personagensDisponiveis.isEmpty()) {
+            int indiceAleatorio = random.nextInt(personagensDisponiveis.size());
+            return personagensDisponiveis.get(indiceAleatorio);
+        }
+
+        return null;
+    }
+
+    private void atualizarTemposEspera() {
+        for (Personagem personagem : herois) {
+            personagem.setTempoEspera(Math.max(0, personagem.getTempoEspera() - 1));
+        }
+    }
+
+    
+    private void menuCombate(Personagem persona) {
+    	
+    }
+
+	//private void jogarFases() {
+    	
+    //}
 }
