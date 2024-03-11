@@ -92,7 +92,8 @@ public class Jogo {
         boolean sair = false;
 
         while (!sair) {
-            System.out.println("----- MENU -----");
+        	System.out.println();
+        	System.out.println("----- MENU -----");
             System.out.println("1. Adicionar Personagem");
             System.out.println("2. Iniciar Jogo");
             System.out.println("3. Sair");
@@ -162,11 +163,14 @@ public class Jogo {
                 Personagem personagem = escolherPersonagemAleatorio();
                 if (personagem != null) {
                     System.out.println(personagem.getNome() + " está atacando!");
-                    System.out.println("Nivel: " + personagem.getNivel() + " || PV: " + personagem.getPV() + " || PM: " + personagem.getPM());
+                    System.out.println("Nivel: " + personagem.getNivel() + " || PV: " + personagem.getPV() 
+                    													+ " || PM: " + personagem.getPM());
+                    System.out.println();
                     menuEscolha(personagem);
                 }
             } else {
                 System.out.println("Todos os personagens estão esperando...");
+                System.out.println();
             }
             atualizarTemposEspera();
         }
@@ -220,15 +224,17 @@ public class Jogo {
     }
     
     private void menuCombate(Personagem persona, Personagem inimigo) {
+    	System.out.println("Habilidades: ");
     	for (int i = 0; i < 3; i++) {
     		System.out.println(i + ":" + persona.getClasse().getHabilidades().get(i).getNome() + " || Custo: " + 
     								persona.getClasse().getHabilidades().get(i).getPesosMana());
     	}
-    	System.out.println("Digite o número da habilidade: ");
+    	System.out.print("Digite o número da habilidade: ");
     	int habilidade = scanner.nextInt();
     	String dano = persona.getClasse().getHabilidades().get(habilidade).getNome();
     	float danos = persona.causarDano(dano, inimigo, viloes.get(0));
     	System.out.println(inimigo.getNome() + " tomou " + danos);
+    	System.out.println();
     	
     	if (inimigo.getPV() <= 0) {
     		herois.experienciaGeral(inimigo.getNivel());
