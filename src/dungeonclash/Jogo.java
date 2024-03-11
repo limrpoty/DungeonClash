@@ -106,6 +106,8 @@ public class Jogo {
                     break;
                 case 2:
                     this.iniciarJogo("src/dungeonclash/jogo.txt");
+                    System.out.println("Todos os monstros foram derrotados. \nVocê conseguiu sair da Dungeon!");
+                    sair = true;
                     break;
                 case 3:
                     sair = true;
@@ -147,8 +149,8 @@ public class Jogo {
     	for (Fase fase : fases) {
     		System.out.println("Fase" + ": " + fase.getDescricao());
     		iniciarBatalha();
+    		viloes.remove(0);
     		System.out.println();
-        	viloes.remove(0);
     	}
     }
     
@@ -160,7 +162,7 @@ public class Jogo {
                 Personagem personagem = escolherPersonagemAleatorio();
                 if (personagem != null) {
                     System.out.println(personagem.getNome() + " está atacando!");
-                    System.out.println("PV: " + personagem.getPV() + " || PM: " + personagem.getPM());
+                    System.out.println("Nivel: " + personagem.getNivel() + " || PV: " + personagem.getPV() + " || PM: " + personagem.getPM());
                     menuEscolha(personagem);
                 }
             } else {
@@ -227,5 +229,10 @@ public class Jogo {
     	String dano = persona.getClasse().getHabilidades().get(habilidade).getNome();
     	float danos = persona.causarDano(dano, inimigo, viloes.get(0));
     	System.out.println(inimigo.getNome() + " tomou " + danos);
+    	
+    	if (inimigo.getPV() <= 0) {
+    		herois.experienciaGeral(inimigo.getNivel());
+    		viloes.get(0).removerPersonagem(inimigo.getNome());
+    	}
     }
 }

@@ -72,8 +72,8 @@ class Personagem {
         return nivel * classe.getInteligencia() + (nivel * classe.getAgilidade() / 3);
     }
 
-    public void adicionarPE(int pe) {
-        this.PE += pe;
+    public void adicionarPE(int nivelAdversario) {
+        this.PE += nivelAdversario * 5;
         while (PE >= nivel * 25) {
             subirNivel();
         }

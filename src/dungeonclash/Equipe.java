@@ -46,6 +46,11 @@ public class Equipe {
 		return null;
 	}
 	
+	public Personagem removerPersonagem(String nome) {
+		equipe.remove(buscaPersonagem(nome));
+		return buscaPersonagem(nome);
+	}
+	
 	public ArrayList<Personagem> proximoAtacante() {
 		for(Personagem personagem : equipe) {
 			if(personagem.getTempoEspera() == 0) {
@@ -56,7 +61,7 @@ public class Equipe {
 	}
 	
 	public boolean estaVazio() {
-		if (equipeInteira() != null) {
+		if (!equipeInteira().isEmpty()) {
 			return false;
 		}
 		return true;
