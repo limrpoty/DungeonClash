@@ -177,7 +177,7 @@ public class Jogo {
     }
 
     private void atualizarTemposEspera() {
-        for (Personagem personagem : herois) {
+        for (Personagem personagem : herois.equipeInteira()) {
             personagem.setTempoEspera(Math.max(0, personagem.getTempoEspera() - 1));
         }
     }
