@@ -20,47 +20,55 @@ class Personagem {
         this.tempoEspera = 0;
     }
     
-    public void causarDano(String habilidade, Personagem atacado, Equipe equipe) {
-    	atacado.usarHabilidade(habilidade, atacado, equipe);
+    public float causarDano(String habilidade, Personagem atacado, Equipe equipe) {
+    	return this.usarHabilidade(habilidade, atacado, equipe);
     }
     
-    public void recebeDano(int dano) {
+    public float recebeDano(float dano) {
     	this.PV -= dano;
     	if (this.PV < 0) {
     		this.PV = 0;
     	}
+		return dano;
     }
     
-    public void usarHabilidade(String nomeHabilidade, Personagem atacado, Equipe equipe) {
-    	int danoOuCura = 0;
+    public float usarHabilidade(String nomeHabilidade, Personagem atacado, Equipe equipe) {
+    	float danoOuCura = 0.0f;
     	String nomeAlvo = atacado.getNome();
     	Personagem alvo = equipe.buscaPersonagem(nomeAlvo);
     	
-    	for (Habilidades habilidades : classe.getHabilidades()) {
-    		if (habilidades.getNome().equals(nomeHabilidade)) {
-    			danoOuCura = habilidades.getPesosDano() * nivel;
-    			if (habilidades.isAfetaAmigos()) {
-    				alvo.PV += danoOuCura;
-    				
-    			} else if (habilidades.isAfetaTodos()) {
-    				for (Personagem persona : equipe.equipeInteira()) {
-    					persona.recebeDano(danoOuCura);
+    	if (this.PV > 0) {
+    		for (Habilidades habilidades : classe.getHabilidades()) {
+    			if (habilidades.getNome().equals(nomeHabilidade)) {
+    				if (this.PM - habilidades.getPesosMana() <= 0) {
+    					tempoEspera = 1;
+    					break;
     				}
-    			} else {
-    				alvo.recebeDano(danoOuCura);
+    				PM -= habilidades.getPesosMana();
+    				tempoEspera = habilidades.getTempo();
+    				danoOuCura = habilidades.getPesosDano() * this.nivel;
+    				if (habilidades.isAfetaAmigos()) {
+    					return alvo.PV += danoOuCura;
+    				
+    				} else if (habilidades.isAfetaTodos()) {
+    					for (Personagem persona : equipe.equipeInteira()) {
+    						return persona.recebeDano(danoOuCura);
+    					}
+    				} else {
+    					return alvo.recebeDano(danoOuCura);
+    				}
     			}
-    			PM -= habilidades.getPesosMana();
-    			tempoEspera = habilidades.getTempo();
     		}
     	}
+		return danoOuCura;
     }
     
     
-    private float calcularPVMax() {
+    private int calcularPVMax() {
         return nivel * classe.getForca() + (nivel * classe.getAgilidade() / 2);
     }
 
-    private float calcularPMMax() {
+    private int calcularPMMax() {
         return nivel * classe.getInteligencia() + (nivel * classe.getAgilidade() / 3);
     }
 

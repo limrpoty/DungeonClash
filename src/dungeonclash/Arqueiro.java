@@ -31,12 +31,6 @@ public class Arqueiro extends Classe {
     }
 
 	@Override
-	public int atacar(Personagem personagem) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public void adicionarPontosAtributo() {
 		setForca(getForca() + 1);
 		setAgilidade(getAgilidade() + 3);

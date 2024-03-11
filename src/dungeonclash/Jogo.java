@@ -20,6 +20,7 @@ public class Jogo {
         this.viloes = new ArrayList<>();
         this.scanner = new Scanner(System.in);
         this.random = new Random();
+        this.herois = new Equipe();
     }
 
     public void iniciarJogo(String nomeArquivo) {
@@ -116,7 +117,30 @@ public class Jogo {
     }
     
     public void adicionarPersonagem() {
-    	
+    	System.out.println("Digite o nome do personagem: ");
+    	String nome = scanner.nextLine();
+    	System.out.println("Digite a classe: ");
+    	String classes = scanner.nextLine();
+    	if (classes.equals("Arqueiro")) {
+        	Classe classe = new Arqueiro(1);
+        	Personagem inimigo = new Personagem(nome, 1, classe);
+            herois.addPersonagem(inimigo);
+            
+        } else if (classes.equals("Guerreiro")) {
+        	Classe classe = new Guerreiro(1);
+        	Personagem inimigo = new Personagem(nome, 1, classe);
+            herois.addPersonagem(inimigo);
+            
+        } else if (classes.equals("Mago")) {
+        	Classe classe = new Mago(1);
+        	Personagem inimigo = new Personagem(nome, 1, classe);
+            herois.addPersonagem(inimigo);
+            
+        } else if (classes.equals("Monstro")) {
+        	Classe classe = new Monstro(1);
+        	Personagem inimigo = new Personagem(nome, 1, classe);
+            herois.addPersonagem(inimigo);
+        } 
     }
     
     private void criarFases() {
@@ -135,8 +159,9 @@ public class Jogo {
             if (verificarPersonagensComTempoZero()) {
                 Personagem personagem = escolherPersonagemAleatorio();
                 if (personagem != null) {
-                    System.out.println(personagem.getNome() + " está atacando!");   
-                    personagem.setTempoEspera(personagem.getTempoEspera() - 1);
+                    System.out.println(personagem.getNome() + " está atacando!");
+                    System.out.println("PV: " + personagem.getPV() + " || PM: " + personagem.getPM());
+                    menuEscolha(personagem);
                 }
             } else {
                 System.out.println("Todos os personagens estão esperando...");
@@ -178,16 +203,29 @@ public class Jogo {
 
     private void atualizarTemposEspera() {
         for (Personagem personagem : herois.equipeInteira()) {
-            personagem.setTempoEspera(Math.max(0, personagem.getTempoEspera() - 1));
+            personagem.setTempoEspera(personagem.getTempoEspera() - 1);
         }
     }
 
-    
-    private void menuCombate(Personagem persona) {
+    private void menuEscolha(Personagem persona) {
+    	System.out.println("Escolha o inimigo: ");
     	
+    	for (Personagem inimigo : viloes.get(0).equipeInteira()) {
+    		System.out.println(inimigo.getID() + ". " + inimigo.getNome() + "  Pv: " + inimigo.getPV());
+    	}
+    	int quem = scanner.nextInt();
+    	menuCombate(persona, viloes.get(0).buscaPersonagem(quem));
     }
-
-	//private void jogarFases() {
-    	
-    //}
+    
+    private void menuCombate(Personagem persona, Personagem inimigo) {
+    	for (int i = 0; i < 3; i++) {
+    		System.out.println(i + ":" + persona.getClasse().getHabilidades().get(i).getNome() + " || Custo: " + 
+    								persona.getClasse().getHabilidades().get(i).getPesosMana());
+    	}
+    	System.out.println("Digite o número da habilidade: ");
+    	int habilidade = scanner.nextInt();
+    	String dano = persona.getClasse().getHabilidades().get(habilidade).getNome();
+    	float danos = persona.causarDano(dano, inimigo, viloes.get(0));
+    	System.out.println(inimigo.getNome() + " tomou " + danos);
+    }
 }

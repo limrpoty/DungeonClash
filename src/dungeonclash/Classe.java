@@ -18,8 +18,6 @@ abstract class Classe {
         habilidades.add(habilidade);
     }
 
-    public abstract int atacar(Personagem personagem);
-
     public abstract void adicionarPontosAtributo();
 
     /*public Habilidades escolherHabilidade() {
