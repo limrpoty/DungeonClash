@@ -208,9 +208,8 @@ public class Jogo {
     }
 
     private void atualizarTemposEspera() {
-        for (Personagem personagem : herois.equipeInteira()) {
-            personagem.setTempoEspera(personagem.getTempoEspera() - 1);
-        }
+        herois.atualizarTempoEspera();
+        viloes.get(0).atualizarTempoEspera();
     }
 
     private void menuEscolha(Personagem persona) {
@@ -233,11 +232,12 @@ public class Jogo {
     	int habilidade = scanner.nextInt();
     	String dano = persona.getClasse().getHabilidades().get(habilidade).getNome();
     	float danos = persona.causarDano(dano, inimigo, viloes.get(0));
-    	System.out.println(inimigo.getNome() + " tomou " + danos);
+    	System.out.println(inimigo.getNome() + " tomou " + danos + " de dano!");
     	System.out.println();
     	
     	if (inimigo.getPV() <= 0) {
     		herois.experienciaGeral(inimigo.getNivel());
+    		System.out.println(inimigo.getNome() + " está morto!\n");
     		viloes.get(0).removerPersonagem(inimigo.getNome());
     	}
     }

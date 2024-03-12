@@ -1,5 +1,5 @@
-fase Como diria colombo a minha em seu ombro
-José Mago 2
-Pinto Arqueiro 2
-Jota Mago 2
-Mota Mago 2
+fase Chegada a entrada da dungeon um grupo de orcs é avistado
+Orc1 Mago 2
+Orc2 Arqueiro 2
+Orc3 Mago 2
+Orc4 Mago 2

@@ -67,11 +67,9 @@ public class Equipe {
 		return true;
 	}
 	
-	public int atualizarTempoEspera(ArrayList<Habilidades> habilidades, String nome) {
-		for (Habilidades habilidade : habilidades) {
-			if (habilidade.getNome() == nome) {
-				return habilidade.getTempo();
-			}
+	public int atualizarTempoEspera() {
+		for (Personagem personagem : equipe) {
+			personagem.reduzirTempoEspera();
 		}
 		return 0;
 		
